@@ -1,0 +1,51 @@
+# Rust
+target/
+**/*.rs.bk
+Cargo.lock
+
+# WASM output
+**/output/
+**/output-docker/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp
+.pnp.js
+
+# React build
+build/
+dist/
+.cache/
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# PEM files (wallets)
+*.pem
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+
+# Testing
+coverage/
+.nyc_output/
+
+# Misc
+*.tgz
+.eslintcache
