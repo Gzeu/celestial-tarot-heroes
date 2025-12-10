@@ -1,0 +1,11 @@
+[package]
+name = "celestial-heroes-meta"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+celestial-heroes = { path = ".." }
+multiversx-sc-meta = "0.50.0"
+
+[workspace]
