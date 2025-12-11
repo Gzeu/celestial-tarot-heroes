@@ -1,0 +1,11 @@
+[package]
+name = "celestial-heroes-mvp-meta"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+celestial-heroes-mvp = { path = ".." }
+
+[[bin]]
+name = "meta"
+path = "src/main.rs"

@@ -1,0 +1,52 @@
+{
+  "name": "initialize MVP contract",
+  "steps": [
+    {
+      "step": "setState",
+      "accounts": {
+        "address:owner": {
+          "nonce": "0",
+          "balance": "1,000,000,000,000,000,000"
+        }
+      },
+      "newAddresses": [
+        {
+          "creatorAddress": "address:owner",
+          "creatorNonce": "0",
+          "newAddress": "sc:contract"
+        }
+      ]
+    },
+    {
+      "step": "scDeploy",
+      "txId": "deploy",
+      "tx": {
+        "from": "address:owner",
+        "contractCode": "mxsc:output/celestial-heroes-mvp.mxsc.json",
+        "value": "0",
+        "arguments": [],
+        "gasLimit": "20,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "out": [],
+        "status": "0",
+        "gas": "*",
+        "refund": "*"
+      }
+    },
+    {
+      "step": "scQuery",
+      "txId": "check-hero-count",
+      "tx": {
+        "to": "sc:contract",
+        "function": "getHeroCount",
+        "arguments": []
+      },
+      "expect": {
+        "out": ["0"],
+        "status": "0"
+      }
+    }
+  ]
+}
