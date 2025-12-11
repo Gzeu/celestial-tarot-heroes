@@ -6,10 +6,123 @@
 ![Rust](https://img.shields.io/badge/Rust-Smart_Contract-orange?style=for-the-badge&logo=rust)
 ![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![CI](https://github.com/Gzeu/celestial-tarot-heroes/workflows/CI/badge.svg)
+
+## 📍 Project Status
+
+**Current Version:** v0.2.0 (Ready for Devnet Testing) | **Last Updated:** Dec 11, 2025
+
+### ✅ Completed
+- [x] Full smart contract implementation (v2.0) with advanced game mechanics
+- [x] MVP smart contract (simplified for rapid testing)
+- [x] dApp fully integrated with real contract queries and transactions
+- [x] Comprehensive test suite for MVP contract
+- [x] Technical documentation (Architecture, API reference)
+- [x] CI/CD pipeline (GitHub Actions)
+- [x] Deployment automation scripts
+- [x] ESLint + Prettier setup
+
+### 🚀 Ready to Deploy
+- [ ] Deploy MVP contract to Devnet
+- [ ] Deploy Full v2.0 contract to Devnet
+- [ ] Test complete user flow (summon → quest → levelup)
+- [ ] Record video tutorial
+
+### 📋 Backlog (Post-Launch)
+- [ ] Generate NFT artwork (planets + tarot cards)
+- [ ] Advanced UI animations
+- [ ] Leaderboard microservice
+- [ ] Marketplace integration
+- [ ] Mainnet deployment
+
+---
+
+## 🚀 Quick Start
+
+### Option 1: Deploy MVP (Recommended for Testing)
+
+**Perfect for:** Quick validation of core gameplay mechanics
+
+```bash
+git clone https://github.com/Gzeu/celestial-tarot-heroes.git
+cd celestial-tarot-heroes
+
+# Deploy MVP contract
+chmod +x deploy-mvp.sh
+./deploy-mvp.sh
+# Note the contract address output
+
+# Run dApp
+cd dapp
+echo "REACT_APP_CONTRACT_ADDRESS=erd1qqqqqq..." > .env
+npm install
+npm start
+```
+
+📖 **See [MVP.md](./MVP.md) for detailed MVP documentation**
+
+**MVP Features:**
+- ✨ Single hero type (Sun + The Fool)
+- 🎯 One quest (100 XP reward)
+- 📈 Simple leveling (100 XP = Level 2)
+- ⚡ Fast deployment (<2 min)
+- 💰 Low cost (0.05 EGLD summon)
+
+### Option 2: Deploy Full Version
+
+**Perfect for:** Complete feature experience
+
+```bash
+cd contracts/celestial-heroes
+sc-meta all build
+
+mxpy contract deploy \
+  --bytecode=output/celestial-heroes.wasm \
+  --pem=~/wallet.pem \
+  --gas-limit=60000000 \
+  --chain=D \
+  --proxy=https://devnet-gateway.multiversx.com \
+  --send
+```
+
+**Full Features:**
+- 🌍 10 Planets with unique stat modifiers
+- 🃏 22 Tarot Arcana combinations (462 unique heroes!)
+- ⚔️ 10 Quest tiers (difficulty 5-150)
+- 🎲 Success/fail mechanics with RNG
+- ⏱️ Quest cooldown system (50 blocks)
+- 💎 Treasury and sustainability
+
+---
+
+## 📊 Version Comparison
+
+| Feature | MVP | Full v2.0 |
+|---------|-----|----------|
+| **Planets** | 1 (Sun) | 10 (all celestial bodies) |
+| **Arcana** | 1 (The Fool) | 22 (complete Major Arcana) |
+| **Hero Combinations** | 1 | 462 unique builds |
+| **Quests** | 1 tier | 10 progressive tiers |
+| **XP System** | Linear (100) | Exponential (level²×50) |
+| **Quest Cooldown** | None | 50 blocks (~5 min) |
+| **Success/Fail** | Guaranteed | Chance-based with luck |
+| **Stat Variance** | Fixed | +0-7 RNG |
+| **Treasury** | No | Yes |
+| **Rename Feature** | No | Yes (0.01 EGLD) |
+| **Summon Cost** | 0.05 EGLD | 0.1 EGLD |
+| **Contract Size** | ~3KB | ~12KB |
+| **Deploy Time** | <1 min | ~3 min |
+| **Gas (summon)** | ~1.5M | ~3M |
+| **Recommended For** | Testing & Validation | Full Experience |
+
+---
 
 ## 🌟 Features
 
 ### Smart Contract (Rust)
+
+#### Full Version Highlights
 - ⚡ **10 Celestial Planets** - Each with unique stat modifiers (Sun=Strength, Neptune=Wisdom, Venus=Luck)
 - 🃏 **22 Tarot Arcana** - Synergistic bonuses with planets for diverse hero builds
 - ⚔️ **Quest System** - 10 difficulty tiers with success/fail mechanics based on hero power
@@ -21,50 +134,16 @@
 
 ### dApp (React + TypeScript)
 - 🔮 **Tarot Forge** - Interactive planet selection + arcana picker with stat preview
-- 👥 **My Heroes** - NFT gallery with detailed stats and progression tracking
+- 👥 **My Heroes** - NFT gallery with real-time data from blockchain
 - 🗺️ **Epic Quests** - 10 quest cards with difficulty, rewards, and success rate calculator
-- 🎨 **Polished UI/UX** - Dark theme with cosmic gradients, smooth animations (framer-motion)
-- 🔗 **Real Contract Integration** - Full MultiversX SDK integration with transaction handling
+- 🎨 **Polished UI/UX** - Dark theme with cosmic gradients, smooth animations
+- 🔗 **Full Integration** - Real contract queries + transaction handling via MultiversX SDK
 
-## 🚀 Quick Start
-
-### Prerequisites
-- Rust 1.75+
-- Node.js 18+
-- MultiversX CLI tools (mxpy, sc-meta)
-
-### Deploy Smart Contract
-
-```bash
-cd contracts/celestial-heroes
-sc-meta all build
-
-# Deploy to Devnet
-mxpy contract deploy \
-  --bytecode=output/celestial-heroes.wasm \
-  --pem=~/wallet.pem \
-  --gas-limit=60000000 \
-  --chain=D \
-  --proxy=https://devnet-gateway.multiversx.com \
-  --send
-```
-
-### Run dApp
-
-```bash
-cd dapp
-npm install
-
-# Set contract address
-echo "REACT_APP_CONTRACT_ADDRESS=erd1qqqqqq..." > .env
-
-npm start
-# Open http://localhost:3000
-```
+---
 
 ## 🎯 Game Mechanics
 
-### Hero Stats Formula
+### Hero Stats Formula (Full Version)
 ```
 Strength = Planet_Strength_Mod + Arcana_Bonus + Variance(0-7)
 Wisdom   = Planet_Wisdom_Mod + Arcana_Bonus + Variance(0-7)
@@ -91,138 +170,92 @@ Rewards on Failure:
 - XP: Base_XP × (1 + Luck/50) × 0.5
 ```
 
-## 📊 Quest Tiers
+---
 
-| Quest | Difficulty | Base XP | Recommended Level |
-|-------|-----------|---------|-------------------|
-| 🌲 Mystic Grove | 5 | 50 | 1-5 |
-| 💎 Crystal Caves | 10 | 100 | 5-10 |
-| 🏛️ Shadow Temple | 18 | 300 | 10-15 |
-| 🗼 Celestial Tower | 28 | 400 | 15-20 |
-| 🐉 Dragon's Lair | 40 | 500 | 20-30 |
-| 🌌 Void Nexus | 55 | 1200 | 30-45 |
-| 🔮 Arcane Labyrinth | 75 | 1400 | 45-60 |
-| 🔥 Phoenix Sanctum | 95 | 1600 | 60-75 |
-| ⏳ Time Rift | 120 | 3150 | 75-90 |
-| ✨ Cosmic Convergence | 150 | 3500 | 90-100 |
+## 📚 Documentation
 
-## 🛡️ Security Features
+- **[MVP Guide](./MVP.md)** - Minimal viable product documentation
+- **[Architecture](./docs/ARCHITECTURE.md)** - System design and data flow
+- **[API Reference](./docs/API.md)** - Complete endpoint documentation
+- **[TODO List](./TODO.md)** - Development roadmap and task tracking
 
-- ✅ Quest cooldown prevents spam
-- ✅ Owner-only treasury withdrawal
-- ✅ Input validation (name length, quest bounds)
-- ✅ Hero ownership verification on all actions
-- ✅ Existence checks before operations
-- ✅ Max level cap prevents infinite scaling
+---
 
-## 📝 Smart Contract Endpoints
+## 🛠️ Development
 
-### Write Endpoints
-- `summonHero(planet, arcana, name)` - Mint hero NFT (0.1 EGLD)
-- `quest(hero_id, quest_id)` - Send hero on quest (returns QuestReward)
-- `levelUp(hero_id)` - Consume XP to increase level
-- `renameHero(hero_id, new_name)` - Change hero name (0.01 EGLD)
-- `withdrawTreasury(amount)` - Owner only
+### Run Tests
 
-### View Endpoints
-- `getHero(hero_id)` - Returns Hero struct
-- `getHeroesByOwner(address)` - Returns array of hero IDs
-- `getRequiredXp(level)` - Calculate XP for next level
-- `canQuest(hero_id)` - Check cooldown status
-- `getQuestDifficulty(quest_id)` - Get difficulty value
-- `getTreasuryBalance()` - Current treasury EGLD
+```bash
+# MVP Contract Tests
+cd contracts/celestial-heroes-mvp
+cargo test
 
-## 🎨 Planet Stats Modifiers
+# Full Contract Tests (coming soon)
+cd contracts/celestial-heroes
+cargo test
 
-| Planet | Icon | Strength | Wisdom | Luck |
-|--------|------|----------|--------|------|
-| ☀️ Sun | ☀️ | 15 | 10 | 8 |
-| 🌙 Moon | 🌙 | 8 | 15 | 12 |
-| ☿ Mercury | ☿ | 10 | 14 | 9 |
-| ♀ Venus | ♀ | 9 | 12 | 14 |
-| ♂ Mars | ♂ | 16 | 7 | 10 |
-| ♃ Jupiter | ♃ | 13 | 13 | 11 |
-| ♄ Saturn | ♄ | 11 | 15 | 8 |
-| ♅ Uranus | ♅ | 12 | 11 | 13 |
-| ♆ Neptune | ♆ | 9 | 16 | 11 |
-| ♇ Pluto | ♇ | 14 | 9 | 14 |
-
-## 🔮 Tech Stack
-
-- **Blockchain**: MultiversX (Devnet)
-- **Smart Contract**: Rust + multiversx-sc 0.50.0
-- **Frontend**: React 18 + TypeScript
-- **Styling**: Custom CSS with CSS variables
-- **Animations**: Framer Motion
-- **Wallet**: @multiversx/sdk-dapp 4.0+
-
-## 📁 Project Structure
-
-```
-celestial-tarot-heroes/
-├── contracts/
-│   └── celestial-heroes/
-│       ├── src/
-│       │   └── lib.rs          # Main contract logic
-│       ├── wasm/               # WASM build output
-│       └── meta/               # Contract metadata
-├── dapp/
-│   ├── src/
-│   │   ├── pages/
-│   │   │   ├── HomePage.tsx
-│   │   │   ├── MyHeroesPage.tsx
-│   │   │   ├── TarotForgePage.tsx
-│   │   │   └── QuestsPage.tsx
-│   │   ├── components/
-│   │   │   └── Layout.tsx
-│   │   ├── config.ts           # Quest/Planet/Arcana data
-│   │   └── App.tsx
-│   └── package.json
-└── README.md
+# dApp Type Check
+cd dapp
+npx tsc --noEmit
 ```
 
-## 🎮 Gameplay Flow
+### Local Development
 
-1. **Connect Wallet** - Use xPortal, DeFi Wallet, or Web Wallet
-2. **Summon Hero** - Choose planet + arcana combination (0.1 EGLD)
-3. **View Your Heroes** - Check stats, level, XP progress
-4. **Select Quest** - Choose from 10 difficulty tiers
-5. **Complete Quest** - Gain XP and stat bonuses (if successful)
-6. **Level Up** - Spend XP to increase level and boost stats
-7. **Repeat** - Progress to harder quests and reach level 100!
+```bash
+# Start dApp
+cd dapp
+npm install
+npm start  # http://localhost:3000
 
-## 🌈 Future Enhancements
+# Build contracts
+cd contracts/celestial-heroes-mvp
+sc-meta all build
+```
 
-- [ ] NFT Marketplace integration
-- [ ] PvP Arena battles
-- [ ] Guild system for cooperative quests
-- [ ] Leaderboard with seasonal rewards
-- [ ] Hero equipment & items
-- [ ] Special events with limited-time quests
-- [ ] Achievement system with badges
-
-## 📜 License
-
-MIT
+---
 
 ## 🤝 Contributing
 
-Contributions welcome! Please:
+Contributions are welcome! Please follow these steps:
+
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📞 Support
+### Development Guidelines
+- Follow Rust best practices for smart contracts
+- Use TypeScript for dApp code
+- Write tests for new features
+- Update documentation
+- Run `cargo fmt` and `prettier` before committing
 
-For questions or issues:
-- Open an issue on GitHub
-- Join MultiversX Discord
-- Follow development updates
+---
+
+## 📜 License
+
+MIT License - see [LICENSE](./LICENSE) file for details
+
+---
+
+## 📞 Support & Community
+
+- **Issues**: [GitHub Issues](https://github.com/Gzeu/celestial-tarot-heroes/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Gzeu/celestial-tarot-heroes/discussions)
+- **MultiversX**: [Discord](https://discord.gg/multiversx)
+- **Updates**: Watch this repo for latest changes
+
+---
+
+## 🙏 Acknowledgments
+
+- Built for the [MultiversX Builders Hub](https://multiversx.com/builders)
+- Inspired by classic RPG mechanics and Tarot mysticism
+- Powered by MultiversX blockchain technology
 
 ---
 
 **Built with ✨ for the MultiversX ecosystem**
 
-[MultiversX](https://multiversx.com) | [Builders Hub](https://multiversx.com/builders)
+[MultiversX](https://multiversx.com) | [Builders Hub](https://multiversx.com/builders-hub) | [Documentation](https://docs.multiversx.com)
