@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  test-mvp-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: stable
+      
+      - name: Install MultiversX SC Meta
+        run: cargo install multiversx-sc-meta --locked
+      
+      - name: Build MVP Contract
+        working-directory: contracts/celestial-heroes-mvp
+        run: sc-meta all build
+      
+      - name: Run MVP Tests
+        working-directory: contracts/celestial-heroes-mvp
+        run: cargo test
+
+  test-full-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: stable
+      
+      - name: Install MultiversX SC Meta
+        run: cargo install multiversx-sc-meta --locked
+      
+      - name: Build Full Contract
+        working-directory: contracts/celestial-heroes
+        run: sc-meta all build
+      
+      - name: Check contract size
+        working-directory: contracts/celestial-heroes
+        run: |
+          SIZE=$(wc -c < output/celestial-heroes.wasm)
+          echo "Contract size: $SIZE bytes"
+          if [ $SIZE -gt 65536 ]; then
+            echo "Warning: Contract exceeds 64KB"
+          fi
+
+  lint-dapp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: dapp/package-lock.json
+      
+      - name: Install dependencies
+        working-directory: dapp
+        run: npm ci
+      
+      - name: Type check
+        working-directory: dapp
+        run: npx tsc --noEmit
+      
+      - name: Build dApp
+        working-directory: dapp
+        run: npm run build
+        env:
+          REACT_APP_CONTRACT_ADDRESS: erd1qqqqqqqqqqqqqpgqxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
